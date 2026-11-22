@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NMIMS CGPA Calculator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f6;
+            margin: 0;
+            padding: 0;
+            color: #222222;
+        }
+        .navbar {
+            background-color: #b31b1b;
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 4px solid #7a0f0f;
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-box {
+            background-color: #ffffff;
+            color: #b31b1b;
+            font-weight: 900;
+            font-size: 18px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+        }
+        .brand-text h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .brand-text p {
+            margin: 2px 0 0;
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 550px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 20px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-top: 5px solid #b31b1b;
+        }
+        h2 {
+            color: #b31b1b;
+            margin-top: 0;
+            font-size: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .subject-row {
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .subject-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 14px;
+            color: #333333;
+        }
+        .input-pair {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        input[type="number"]:focus {
+            border-color: #b31b1b;
+            outline: none;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            flex: 1;
+            padding: 13px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-submit {
+            background-color: #b31b1b;
+            color: #ffffff;
+        }
+        .btn-submit:active {
+            background-color: #8f1414;
+        }
+        .btn-reset {
+            background-color: #e0e0e0;
+            color: #333333;
+        }
+        .result-box {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            background-color: #fff5f5;
+            border: 1px solid #f5c2c2;
+            border-left: 5px solid #b31b1b;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .result-box .points {
+            font-size: 16px;
+            color: #444;
+            margin: 0 0 6px;
+        }
+        .result-box .cgpa {
+            font-size: 26px;
+            font-weight: bold;
+            color: #b31b1b;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="brand">
+            <div class="logo-box">NMIMS</div>
+            <div class="brand-text">
+                <h1>SVKM's NMIMS</h1>
+                <p>Student Grade & CGPA Calculator</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Enter Your Marks</h2>
+
+        <form id="cgpaForm" onsubmit="calculateCGPA(event)">
+
+            <div class="subject-row">
+                <span class="subject-label">Calculus (4 Credits)</span>
+                <div class="input-pair">
+                    <input type="number" id="c" step="any" min="0" max="100" placeholder="TEE (100)" required>
+                    <input type="number" id="ic" step="any" min="0" max="50" placeholder="Internal (50)" required>
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <span class="subject-label">Physics (4 Credits)</span>
+                <div class="input-pair">
+                    <input type="number" id="p" step="any" min="0" max="100" placeholder="TEE (100)" required>
+                    <input type="number" id="ip" step="any" min="0" max="50" placeholder="Internal (50)" required>
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <span class="subject-label">CTPS (4 Credits)</span>
+                <div class="input-pair">
+                    <input type="number" id="ct" step="any" min="0" max="100" placeholder="TEE (100)" required>
+                    <input type="number" id="ict" step="any" min="0" max="50" placeholder="Internal (50)" required>
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <span class="subject-label">BEEE (3 Credits)</span>
+                <div class="input-pair">
+                    <input type="number" id="b" step="any" min="0" max="100" placeholder="TEE (100)" required>
+                    <input type="number" id="ib" step="any" min="0" max="50" placeholder="Internal (50)" required>
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <span class="subject-label">EGD (2 Credits)</span>
+                <div class="input-pair">
+                    <input type="number" id="e" step="any" min="0" max="100" placeholder="TEE (50)" required>
+                    <input type="number" id="ie" step="any" min="0" max="50" placeholder="Internal (50)" required>
+                </div>
+            </div>
+
+            <div class="subject-row">
+                <span class="subject-label">1-Credit Subjects</span>
+                <div class="input-pair">
+                    <input type="number" id="iee" step="any" min="0" max="50" placeholder="EE (50)" required>
+                    <input type="number" id="ieep" step="any" min="0" max="50" placeholder="EEP (50)" required>
+                    <input type="number" id="ice" step="any" min="0" max="100" placeholder="Coursera (50)" required>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="submit" class="btn-submit">Calculate CGPA</button>
+                <button type="reset" class="btn-reset" onclick="resetResult()">Clear</button>
+            </div>
+
+        </form>
+
+        <div class="result-box" id="resultBox">
+            <p class="points" id="pointsText"></p>
+            <p class="cgpa" id="cgpaText"></p>
+        </div>
+    </div>
+
+    <script>
+        function grade(total) {
+            if (total >= 90) return 10;
+            else if (total >= 80) return 9;
+            else if (total >= 70) return 8;
+            else if (total >= 60) return 7;
+            else if (total >= 55) return 6;
+            else if (total >= 50) return 5;
+            else if (total >= 40) return 4;
+            else return 0;
+        }
+
+        function val(id) {
+            return parseFloat(document.getElementById(id).value) || 0;
+        }
+
+        function calculateCGPA(event) {
+            event.preventDefault();
+
+            let c = val("c"), ic = val("ic");
+            let p = val("p"), ip = val("ip");
+            let ct = val("ct"), ict = val("ict");
+            let b = val("b"), ib = val("ib");
+            let e = val("e"), ie = val("ie");
+            let iee = val("iee");
+            let ieep = val("ieep");
+            let ice = val("ice");
+
+            let csum   = (c / 2.0) + ic;
+            let psum   = (p / 2.0) + ip;
+            let ctsum  = (ct / 2.0) + ict;
+            let bsum   = (b / 2.0) + ib;
+            let esum   = (e / 2.0) + ie;
+            let eesum  = iee * 2;
+            let eepsum = ieep * 2;
+
+            let total_points = (grade(csum) * 4) + (grade(psum) * 4) + (grade(ctsum) * 4) +
+                               (grade(bsum) * 3) + (grade(esum) * 2) + (grade(eesum) * 1) +
+                               (grade(eepsum) * 1) + (grade(ice) * 1);
+
+            let cgpa = total_points / 20.0;
+
+            document.getElementById("pointsText").innerText = "Total Points: " + total_points + " / 200";
+            document.getElementById("cgpaText").innerText = "Your CGPA is " + cgpa.toFixed(2);
+            document.getElementById("resultBox").style.display = "block";
+        }
+
+        function resetResult() {
+            document.getElementById("resultBox").style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
